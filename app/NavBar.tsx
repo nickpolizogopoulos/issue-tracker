@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface NavLink {
+type NavLink = {
     label: string,
     href: string
 };
@@ -24,7 +24,7 @@ const NavBar = () => {
     const currentPath = usePathname();
 
     return (
-        <nav className="flex space-x-10 border-b mb-5 px-5 h-14 items-center">
+        <nav className="flex space-x-10 border-b mb-5 px-5 h-14 items-center select-none">
             <Link href="/">
                 <img src="/logo.svg" className="w-10" alt="Issue Tracker Logo" />
             </Link>
