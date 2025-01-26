@@ -24,12 +24,12 @@ const IssuesPage = async () => {
         <Table.Body>
           { issues.map(issue =>
             <Table.Row>
-              <Table.ColumnHeaderCell>
+              <Table.Cell>
                 {issue.title}
                 <div className='block md:hidden'>{issue.status}</div>
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='hidden md:table-cell'>{issue.status}</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className='hidden md:table-cell'>{issue.createdAt.toDateString()}</Table.ColumnHeaderCell>
+              </Table.Cell>
+              <Table.Cell className='hidden md:table-cell'>{issue.status}</Table.Cell>
+              <Table.Cell className='hidden md:table-cell'>{issue.createdAt.toDateString()}</Table.Cell>
             </Table.Row>
           )}
         </Table.Body>
