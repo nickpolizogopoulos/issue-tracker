@@ -10,7 +10,7 @@ const ErrorMessage = ( {children}: PropsWithChildren ) => {
     <Text color='red' as='p' className='italic'>
         {children}
     </Text>
-  )
-}
+  );
+};
 
-export default ErrorMessage
+export default ErrorMessage;
