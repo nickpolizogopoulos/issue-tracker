@@ -20,8 +20,8 @@ import { createIssueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
-import Link from 'next/link';
 import ArrowIcon from '@/app/components/ArrowIcon';
+import BackToIssues from '../BackToIssues';
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -54,14 +54,8 @@ const NewIssuePage = () => {
 
   return (
     <>
-      <Button asChild variant='soft'>
-        <Link href={'/issues'}>
-          <ArrowIcon direction='left' />
-          Issues
-        </Link>
-      </Button>
-
-      <form onSubmit={onSubmit} className='max-w-xl space-y-3 mt-5'>
+      <BackToIssues />
+      <form onSubmit={onSubmit} className='max-w-xl space-y-3'>
 
         <Heading className='text-gray-600'>New Issue</Heading>
         <TextField.Root placeholder="Title" {...register('title')}></TextField.Root>
