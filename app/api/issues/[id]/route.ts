@@ -1,12 +1,12 @@
 import { issueSchema } from "@/app/validationSchemas";
 import { prisma } from "@/prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import {
+    NextRequest,
+    NextResponse
+} from "next/server";
 
 type Params = {
     params: Promise<{
-        // params: {
-        //     id: string;
-        // }
         id: string;
     }>
 };
@@ -26,7 +26,7 @@ export const PATCH = async (
         where: {
             id: +(await params).id
         }
-    })
+    });
 
     if (!issue)
         return NextResponse.json({message: 'Issue not found'}, {status: 404});
