@@ -1,11 +1,12 @@
 'use client';
 
 import ArrowIcon from '@/app/components/ArrowIcon';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { issueSchema } from '@/app/validationSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Issue } from '@prisma/client';
+import { InfoCircledIcon } from '@radix-ui/react-icons';
 import {
   Button,
   Callout,
@@ -20,15 +21,9 @@ import {
   Controller,
   useForm
 } from 'react-hook-form';
-import dynamic from 'next/dynamic';
+import SimpleMDE from 'react-simplemde-editor';
 import { z } from 'zod';
 import BackToIssues from './BackToIssues';
-import { Issue } from '@prisma/client';
-
-const SimpleMDE = dynamic(() => 
-  import('react-simplemde-editor'),
-  { ssr: false }
-);
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -74,7 +69,9 @@ const IssueForm = ( {issue}: Props ) => {
       <BackToIssues />
       <form onSubmit={onSubmit} className='max-w-xl space-y-3'>
 
-        <Heading className='text-gray-600'>New Issue</Heading>
+        <Heading className='text-gray-600'>
+          {issue ? 'Update Issue' : 'New Issue'}
+        </Heading>
         <TextField.Root defaultValue={issue?.title} placeholder="Title" {...register('title')}></TextField.Root>
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
