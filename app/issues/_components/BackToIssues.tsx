@@ -1,6 +1,6 @@
 import { Button } from '@radix-ui/themes';
 import Link from 'next/link';
-import ArrowIcon from '../components/ArrowIcon';
+import ArrowIcon from '../../components/ArrowIcon';
 
 const BackToIssues = () => {
   return (

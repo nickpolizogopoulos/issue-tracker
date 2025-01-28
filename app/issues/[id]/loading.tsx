@@ -4,7 +4,7 @@ import {
   Flex
 } from "@radix-ui/themes";
 import { Skeleton } from '@/app/components';
-import BackToIssues from "../BackToIssues";
+import BackToIssues from "../_components/BackToIssues";
 
 const LoadingIssueDetailPage = () => {
   return (

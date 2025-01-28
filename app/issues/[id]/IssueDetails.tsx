@@ -7,7 +7,7 @@ import {
     Text
 } from "@radix-ui/themes";
 import ReactMarkdown from "react-markdown";
-import BackToIssues from "../BackToIssues";
+import BackToIssues from "../_components/BackToIssues";
 
 type Props = {
     issue: Issue

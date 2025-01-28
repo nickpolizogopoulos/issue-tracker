@@ -1,6 +1,6 @@
 import { Skeleton } from '@/app/components';
 import { Box } from '@radix-ui/themes';
-import BackToIssues from '../BackToIssues';
+import BackToIssues from '../_components/BackToIssues';
 
 const LoadingNewIssuePage = () => {
   return (
