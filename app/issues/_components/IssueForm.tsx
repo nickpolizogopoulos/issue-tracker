@@ -4,7 +4,7 @@ import ArrowIcon from '@/app/components/ArrowIcon';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
-import { createIssueSchema } from '@/app/validationSchemas';
+import { issueSchema } from '@/app/validationSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
@@ -30,7 +30,7 @@ const SimpleMDE = dynamic(() =>
   { ssr: false }
 );
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 type Props = {
   issue?: Issue
@@ -44,7 +44,7 @@ const IssueForm = ( {issue}: Props ) => {
     handleSubmit,
     formState: { errors }
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema)
+    resolver: zodResolver(issueSchema)
   });
   
   const router = useRouter();
