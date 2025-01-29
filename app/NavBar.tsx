@@ -63,7 +63,7 @@ const NavBar = () => {
                             <DropdownMenu.Root>
                                 <DropdownMenu.Trigger>
                                     <button className="select-none bg-transparent focus:outline-none focus:ring-0">
-                                        <Avatar src={session.user!.image!} fallback="👤" radius="full" />
+                                        <Avatar referrerPolicy='no-referrer' src={session.user!.image!} fallback="?" radius="full" />
                                     </button>
                                 </DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
