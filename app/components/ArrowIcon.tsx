@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 import { ArrowUpIcon } from '@radix-ui/react-icons';
