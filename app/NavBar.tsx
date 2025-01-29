@@ -82,7 +82,7 @@ const AuthStatus = () => {
     const { status, data: session } = useSession();
 
     if (status === 'loading')
-        return null;
+        return <Button variant="soft" disabled>Login</Button>;
 
     if (status === 'unauthenticated')
         return (
