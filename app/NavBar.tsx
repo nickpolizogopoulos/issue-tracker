@@ -1,9 +1,10 @@
 'use client';
 
-import { Box, Container, Flex } from "@radix-ui/themes";
+import { Avatar, Box, Container, DropdownMenu, Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { PersonIcon } from "@radix-ui/react-icons";
 
 type NavLink = {
     label: string,
@@ -58,7 +59,24 @@ const NavBar = () => {
                         </ul>
                     </Flex>
                     <Box>
-                        {status === 'authenticated' && <Link href='/api/auth/signout'>Logout</Link>}
+                        {status === 'authenticated' && 
+                            <DropdownMenu.Root>
+                                <DropdownMenu.Trigger>
+                                    <button className="select-none bg-transparent focus:outline-none focus:ring-0">
+                                        <Avatar src={session.user!.image!} fallback="👤" radius="full" />
+                                    </button>
+                                </DropdownMenu.Trigger>
+                                <DropdownMenu.Content>
+                                    <DropdownMenu.Label>
+                                        {session.user!.email}
+                                    </DropdownMenu.Label>
+                                    <DropdownMenu.Item>
+                                        <Link href='/api/auth/signout'>Logout</Link>
+                                    </DropdownMenu.Item>
+                                </DropdownMenu.Content>
+                            </DropdownMenu.Root>
+
+                        }
                         {status === 'unauthenticated' && <Link href='/api/auth/signin'>Login</Link>}
                     </Box>
                 </Flex>
