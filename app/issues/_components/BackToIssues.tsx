@@ -6,7 +6,7 @@ const BackToIssues = () => {
   return (
     <div className='mb-5'>
       <Button asChild variant='soft'>
-          <Link href={'/issues'}>
+          <Link href={'/issues/list'}>
             <ArrowIcon direction='left' />
             Issues
           </Link>
