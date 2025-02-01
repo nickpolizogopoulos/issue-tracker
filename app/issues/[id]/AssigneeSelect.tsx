@@ -4,8 +4,9 @@ import { Skeleton } from '@/app/components';
 import { Issue, User } from "@prisma/client";
 import { Select, Separator } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios from 'axios';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 type Props = {
     issue: Issue;
@@ -24,16 +25,24 @@ const AssigneeSelect = ({ issue }: Props) => {
 
     const [value, setValue] = useState<string | null>(issue.assignedToUserId ?? "null");
 
-    const handleChange = (userId: string) => {
+    const handleChange = async (userId: string) => {
         const newValue = userId === "null" ? null : userId;
         setValue(newValue);
 
-        try {
-            axios.patch(`/api/issues/${issue.id}`, { assignedToUserId: newValue });
-        }
-        catch (error) {
-            console.error("Failed to update assignee", error);
-        }
+        await axios
+            .patch(
+                `/api/issues/${issue.id}`,
+                { assignedToUserId: newValue }
+            )
+            .catch( () => toast.error('Changes could not be saved') );
+
+        //* either way will work
+        // try {
+        //     await axios.patch(`/xapi/issues/${issue.id}`, { assignedToUserId: newValue });
+        // }
+        // catch (error) {
+        //     toast.error('Changes could not be saved');
+        // }
     };
 
     if (isLoading) 
@@ -43,26 +52,29 @@ const AssigneeSelect = ({ issue }: Props) => {
         return null;
 
     return (
-        <Select.Root defaultValue={value || 'null'} onValueChange={handleChange}>
-            <Select.Trigger placeholder='Assign...' />
-            <Select.Content>
-                <Select.Group>
-                    <Select.Label>Suggestions</Select.Label>
-                    <Separator size='4' />
-                    <Select.Item value='null'>Unassigned</Select.Item>
-                    {
-                        users?.map(user => 
-                            <Select.Item 
-                                key={user.id}
-                                value={user.id}
-                            >
-                                {user.name}
-                            </Select.Item>
-                        )
-                    }
-                </Select.Group>
-            </Select.Content>
-        </Select.Root>
+        <>    
+            <Select.Root defaultValue={value || 'null'} onValueChange={handleChange}>
+                <Select.Trigger placeholder='Assign...' />
+                <Select.Content>
+                    <Select.Group>
+                        <Select.Label>Suggestions</Select.Label>
+                        <Separator size='4' />
+                        <Select.Item value='null'>Unassigned</Select.Item>
+                        {
+                            users?.map(user => 
+                                <Select.Item 
+                                    key={user.id}
+                                    value={user.id}
+                                >
+                                    {user.name}
+                                </Select.Item>
+                            )
+                        }
+                    </Select.Group>
+                </Select.Content>
+            </Select.Root>
+            <Toaster />
+        </>
     );
 };
 
