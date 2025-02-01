@@ -14,14 +14,7 @@ type Props = {
 
 const AssigneeSelect = ({ issue }: Props) => {
 
-    const { data: users, error, isLoading } = useQuery<User[]>({
-        queryKey: ['users'],
-        queryFn: () => axios
-            .get('/api/users')
-            .then(res => res.data),
-        staleTime: 60 * 1000, // 1 min
-        retry: 3,
-    });
+    const { data: users, error, isLoading } = useUsers();
 
     const [value, setValue] = useState<string | null>(issue.assignedToUserId ?? "null");
 
@@ -77,5 +70,16 @@ const AssigneeSelect = ({ issue }: Props) => {
         </>
     );
 };
+
+const useUsers = () => 
+    useQuery<User[]>({
+        queryKey: ['users'],
+        queryFn: () => 
+            axios
+                .get('/api/users')
+                .then(res => res.data),
+        staleTime: 60 * 1000, //* 1 min
+        retry: 3,
+    });
 
 export default AssigneeSelect;
