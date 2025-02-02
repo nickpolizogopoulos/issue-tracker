@@ -35,7 +35,6 @@ const NavBar = () => {
     );
 };
 
-
 export const NavLinks = () => {
     const currentPath = usePathname();
 
@@ -74,8 +73,6 @@ export const NavLinks = () => {
         </ul>
     );
 };
-
-
 
 const AuthStatus = () => {
 
