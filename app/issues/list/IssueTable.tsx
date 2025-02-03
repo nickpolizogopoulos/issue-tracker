@@ -2,7 +2,6 @@ import {
     IssueStatusBadge,
     Link
 } from "@/app/components";
-import { prisma } from "@/prisma/client";
 import {
     Issue,
     Status
