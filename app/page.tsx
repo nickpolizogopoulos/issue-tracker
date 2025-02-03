@@ -1,9 +1,12 @@
 import { prisma } from "@/prisma/client";
+import { Status } from "@prisma/client";
+import {
+  Flex,
+  Grid
+} from "@radix-ui/themes";
+import IssueChart from "./IssueChart";
 import IssueSummary from "./IssueSummary";
 import LatestIssues from "./LatestIssues";
-import { Status } from "@prisma/client";
-import { Flex, Grid } from "@radix-ui/themes";
-import IssueChart from "./IssueChart";
 
 export default async function Home() {
 
@@ -15,19 +18,17 @@ export default async function Home() {
     });
   };
 
+  const issues = {
+    open: await getIssues('OPEN'),
+    closed: await getIssues('CLOSED'),
+    inProgress: await getIssues('IN_PROGRESS'),
+  };
+
   return (
     <Grid columns={{ initial: '1', md: '2' }} gap='5'>
       <Flex direction='column' gap='5'>
-        <IssueSummary
-          open={await getIssues('OPEN')}
-          closed={await getIssues('CLOSED')}
-          inProgress={await getIssues('IN_PROGRESS')}
-        />
-        <IssueChart 
-          open={await getIssues('OPEN')}
-          closed={await getIssues('CLOSED')}
-          inProgress={await getIssues('IN_PROGRESS')}
-        />
+        <IssueSummary { ...issues } />
+        <IssueChart { ...issues } />
       </Flex>
       <LatestIssues />
     </Grid>

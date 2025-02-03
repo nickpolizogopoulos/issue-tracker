@@ -96,8 +96,8 @@ const AuthStatus = () => {
                         <Avatar 
                             referrerPolicy='no-referrer'
                             src={session!.user!.image!}
-                            fallback="?"
                             radius="full" 
+                            fallback={ <img src="user-icon.svg" alt="user" /> }
                         />
                     </button>
                 </DropdownMenu.Trigger>

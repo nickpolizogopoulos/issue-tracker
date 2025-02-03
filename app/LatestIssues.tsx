@@ -22,7 +22,7 @@ const LatestIssues = async () => {
     });
 
     return (
-        <Card size='3'>
+        <Card size='3' className='hover:shadow-lg transition duration-250 ease-in-out'>
             <Heading mb='4' className='text-gray-600'>
                 Latest Issues:
             </Heading>
@@ -30,7 +30,7 @@ const LatestIssues = async () => {
                 <Table.Body>
                     {
                         latestIssues.map( issue => 
-                            <Table.Row key={issue.id}>
+                            <Table.Row key={issue.id} className='hover:bg-gray-100'>
                                 <Table.Cell>
                                     <Flex justify='between'>
                                         <Flex direction='column' align='start' gap='1'>
@@ -39,14 +39,15 @@ const LatestIssues = async () => {
                                             </Link>
                                             <IssueStatusBadge status={issue.status} />
                                         </Flex>
-                                        {issue.assignedToUser && (
-                                            <Avatar
+                                        {
+                                            issue.assignedToUser
+                                            && <Avatar
                                                 src={issue.assignedToUser.image!}
-                                                fallback='?'
                                                 size='2'
                                                 radius='full'
+                                                fallback={ <img src="user-icon.svg" alt="user" /> }
                                             />
-                                        )}
+                                        }
                                     </Flex>
                                 </Table.Cell>
                             </Table.Row>
