@@ -25,22 +25,6 @@ type Props = {
 const IssueTable = async ( {searchParams, issues}: Props ) => {
 
     const resolvedSearchParams = await searchParams;
-    const statuses = Object.values(Status);
-    const status = statuses.includes(resolvedSearchParams.status) ? resolvedSearchParams.status : undefined;
-    const where = { status };
-
-    const orderBy = tableColumns
-    .map( column => column.value )
-    .includes(resolvedSearchParams.orderBy)
-    ? { [resolvedSearchParams.orderBy]: 'asc' }
-    : undefined;
-
-    const page = parseInt((await searchParams).page) || 1;
-    const pageSize = 10;
-
-    const issueCount = await prisma.issue.count({
-        where
-    });
 
     return (
         <Table.Root variant='surface'>

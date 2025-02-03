@@ -30,6 +30,7 @@ const DeleteIssueButton = ( {issueId}: Props ) => {
     catch (error) {
       setIsDeleting(false);
       setError(true);
+      console.log(error);
     }
   };
 

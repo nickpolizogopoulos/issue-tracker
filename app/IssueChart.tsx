@@ -8,6 +8,7 @@ import {
     YAxis,
     Bar
 } from 'recharts';
+import { BarProps } from 'recharts';
 
 type Props = {
     open: number;
@@ -37,7 +38,7 @@ const IssueChart = ( {open, inProgress, closed}: Props ) => {
         }
     ];
 
-    const chartShape = (props: any) => {
+    const chartShape = (props: BarProps) => {
         const { x, y, width, height } = props;
         return (
           <g className="group">

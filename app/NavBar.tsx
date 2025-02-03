@@ -9,6 +9,7 @@ import {
     Flex
 } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -24,7 +25,7 @@ const NavBar = () => {
                 <Flex justify='between' align='center'>
                     <Flex align='center' gap='5'>
                         <Link href="/">
-                            <img src="/logo.svg" className="w-10" alt="Issue Tracker Logo" />
+                            <Image src="/logo.svg" width={45} height={45} alt="Issue Tracker Logo" />
                         </Link>
                         <NavLinks />
                     </Flex>
@@ -97,7 +98,7 @@ const AuthStatus = () => {
                             referrerPolicy='no-referrer'
                             src={session!.user!.image!}
                             radius="full" 
-                            fallback={ 
+                            fallback={
                                 <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="12" cy="8" r="4" fill="#222222"/>
                                     <path fillRule="evenodd" clipRule="evenodd" d="M12 13C8.33033 13 5.32016 15.4204 5.02395 18.5004C4.99752 18.7753 5.22389 19 5.50003 19H18.5C18.7762 19 19.0025 18.7753 18.9761 18.5004C18.6799 15.4204 15.6697 13 12 13Z" fill="#2A4157" fillOpacity="0.24" />

@@ -61,6 +61,7 @@ const IssueForm = ( {issue}: Props ) => {
     catch (error) {
       setSubmitting(false);
       setError('An unexpected error occurred');
+      console.log(error);
     }
   });
 

@@ -8,6 +8,7 @@ import {
 } from "@radix-ui/themes";
 import IssueStatusBadge from "./components/IssueStatusBadge";
 import Link from "./components/Link";
+import Image from "next/image";
 
 const LatestIssues = async () => {
 
@@ -45,7 +46,7 @@ const LatestIssues = async () => {
                                                 src={issue.assignedToUser.image!}
                                                 size='2'
                                                 radius='full'
-                                                fallback={ <img src="user-icon.svg" alt="user" /> }
+                                                fallback={ <Image src="user-icon.svg" width={100} height={100} alt="user" /> }
                                             />
                                         }
                                     </Flex>
