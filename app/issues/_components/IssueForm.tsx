@@ -5,12 +5,14 @@ import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { issueSchema } from '@/app/validationSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Issue } from '@prisma/client';
+import { Issue, Status } from '@prisma/client';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import {
   Button,
   Callout,
+  Flex,
   Heading,
+  Select,
   TextField
 } from '@radix-ui/themes';
 import axios from 'axios';
@@ -45,15 +47,22 @@ const IssueForm = ( {issue}: Props ) => {
   const router = useRouter();
   const [error, setError] = useState<string>('');
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
+  const [status, setStatus] = useState<Status>();
+
+  const handleStatusChange = (status: Status) => {
+    setStatus(status);
+  };
 
   const onSubmit = handleSubmit( async data => {
     try {
       setSubmitting(true);
 
+      const payload = { ...data, status };
+
       if (issue) 
-        axios.patch(`/api/issues/${issue.id}`, data);
+        await axios.patch(`/api/issues/${issue.id}`, payload);
       else
-        await axios.post('/api/issues', data);
+        await axios.post('/api/issues', payload);
 
       router.push('/issues/list');
       router.refresh();
@@ -94,11 +103,26 @@ const IssueForm = ( {issue}: Props ) => {
           <Callout.Text>{error || 'Title and Description fields are required!'}</Callout.Text>
         </Callout.Root>}
 
-        <Button disabled={isSubmitting}>
-          {isSubmitting && <Spinner />}
-          {!isSubmitting && <ArrowIcon direction='up' />}
-          {issue ? 'Update Issue' : 'Submit New Issue'}
-        </Button>
+        <Flex gap='4'>
+          <Button disabled={isSubmitting}>
+            {isSubmitting && <Spinner />}
+            {!isSubmitting && <ArrowIcon direction='up' />}
+            {issue ? 'Update Issue' : 'Submit New Issue'}
+          </Button>
+          {
+            issue &&            
+            <Select.Root value={status} defaultValue={issue?.status} onValueChange={handleStatusChange}>
+              <Select.Trigger />
+              <Select.Content>
+                <Select.Group>
+                  <Select.Item value="OPEN">Open</Select.Item>
+                  <Select.Item value="IN_PROGRESS">In Progress</Select.Item>
+                  <Select.Item value="CLOSED">Closed</Select.Item>
+                </Select.Group>
+              </Select.Content>
+            </Select.Root>
+          }
+        </Flex>
 
       </form>
     </>

@@ -1,6 +1,7 @@
 import authOptions from "@/app/auth/authOptions";
 import { patchIssueSchema } from "@/app/validationSchemas";
 import { prisma } from "@/prisma/client";
+import { Status } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import {
     NextRequest,
@@ -15,57 +16,61 @@ type Params = {
 
 export const PATCH = async (
     request: NextRequest,
-    {params}: Params
+    { params }: Params
 ) => {
 
     const session = await getServerSession(authOptions);
 
     if (!session)
-        return NextResponse.json({}, {status: 401});
+        return NextResponse.json({}, { status: 401 });
 
     const body = await request.json();
     const validation = patchIssueSchema.safeParse(body);
 
     if (!validation.success)
-        return NextResponse.json(validation.error.errors, {status: 400});
+        return NextResponse.json(validation.error.errors, { status: 400 });
 
+    const { assignedToUserId, title, description, status } = body;
 
-    const {assignedToUserId, title, description} = body;
+    const validStatuses: Status[] = ['OPEN', 'IN_PROGRESS', 'CLOSED'];
+    if (status && !validStatuses.includes(status)) {
+        return NextResponse.json(
+            { error: "Invalid status value" },
+            { status: 400 }
+        );
+    }
 
     if (assignedToUserId) {
         const user = await prisma.user.findUnique({
-            where: {
-                id: assignedToUserId
-            }
+            where: { id: assignedToUserId }
         });
 
         if (!user)
             return NextResponse.json(
-                {error: 'Invalid user'},
-                {status: 400}
+                { error: "Invalid user" },
+                { status: 400 }
             );
     }
 
     const issue = await prisma.issue.findUnique({
         where: {
-            id: +(await params).id
+            id: parseInt((await params).id)
         }
     });
 
     if (!issue)
         return NextResponse.json(
-            {message: 'Issue not found'},
-            {status: 404}
+            { message: "Issue not found" },
+            { status: 404 }
         );
 
     const updatedIssue = await prisma.issue.update({
-        where: {
-            id: issue.id
-        },
+        where: { id: issue.id },
         data: {
             title,
             description,
             assignedToUserId,
+            ...(status && { status }) // Only update if status is provided
         }
     });
 
